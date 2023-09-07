@@ -39,12 +39,97 @@ const images = [
 
 ]
 
-const carouselElement = document.getElementById('carousel');
+console.log(images);
 
-images.forEach(element => {
-    
-    if (element.active) {
-        carouselElement.innerHTML += `<img class='img-fluid'src='./assets/img/${element.path}'>`;
+//Definisco gli elementi di cui ho bisogno
+const carouselImagesElement = document.querySelector('#carousel .images');
+const rightArrow = document.querySelector('i.fa-chevron-circle-right');
+const leftArrow = document.querySelector('i.fa-chevron-circle-left');
+
+
+
+
+imageWrite(carouselImagesElement, images);
+
+
+//Mando avanti di un'immagine il carosello quando clicco sulla freccia destra
+rightArrow.addEventListener('click', function () {
+    console.log('destra');
+    imageForward(images);
+    imageWrite(carouselImagesElement, images);
+    //console.log(images);
+});
+
+
+//Mando indietro di un'immagine il carosello quando clicco sulla freccia sinistra
+leftArrow.addEventListener('click', function () {
+    console.log('sinistra');
+    imageBackword(images);
+    imageWrite(carouselImagesElement, images);
+    //console.log(images);
+});
+
+
+
+/**
+ * ### imageForward
+ * This function set the active value to the next image
+ * @param {Object[]} imageList 
+ */
+function imageForward (imageList) {
+
+    let position = 0
+    images.forEach((image, i) => {
+        if(image.active) {
+            image.active = false;
+            position = i;
+            
+        }
+    })
+
+    if (position === imageList.length - 1) {
+        position = -1;
     }
 
-});
+    imageList[++position].active = true;
+}
+
+/**
+ * ### imageBackword
+ * This function set the active value to the previous image
+ * @param {Object[]} imageList 
+ */
+function imageBackword (imageList) {
+
+    let position = 0
+    images.forEach((image, i) => {
+        if(image.active) {
+            image.active = false;
+            position = i;
+            
+        }
+    })
+
+    if (position === 0) {
+        position = imageList.length;
+    }
+    imageList[--position].active = true;
+}
+
+
+
+/**### imageWrite
+ * > This function append to the DOM Element the active image
+ * @param {Object} DOMElement Element where i can write 
+ * @param {Object[]} imageList 
+ */
+function imageWrite (DOMElement, imageList) {
+
+    imageList.forEach((image) => {
+    
+        if (image.active) {
+            DOMElement.innerHTML = `<img class='img-fluid' src='./assets/img/${image.path}'>`;
+        }
+    
+    });
+}

@@ -1,0 +1,15 @@
+
+/* #carousel {
+    height: 450px;
+} */
+
+#controls {
+    width: 100%;
+}
+
+
+img {
+    margin: auto;
+    object-fit: contain;
+    object-position: center;
+}
