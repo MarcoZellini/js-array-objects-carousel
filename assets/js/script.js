@@ -14,26 +14,25 @@ Consegna:
 //Array di oggetti immagini
 const images = [
     {
-        path: '01.webp',
+        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
         active: true
     },
     {
-        path: '02.webp',
+        path: `https://picsum.photos/1000/600?random=${Math.ceil(Math.random() * 100)}`,
         active: false
     },
     {
-        path: '03.webp',
+        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
         active: false
     },
     {
-        path: '04.webp',
+        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
         active: false
     },
     {
-        path: '05.webp',
+        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
         active: false
     }
-
 ];
 
 //Definisco gli elementi di cui ho bisogno
@@ -48,22 +47,15 @@ imageWrite(carouselImagesElement, images);
 //Muovo in avanti le immagini ogni 3 secondi
 let carouselId = setInterval(imageForward, 3000, carouselImagesElement, images);
 
-
-
-
 //Mando avanti di un'immagine il carosello quando clicco sulla freccia destra
 rightArrow.addEventListener('click', function () {
-    console.log('destra');
     imageForward(carouselImagesElement, images);
-    // imageWrite(, images);
 });
 
 
 //Mando indietro di un'immagine il carosello quando clicco sulla freccia sinistra
 leftArrow.addEventListener('click', function () {
-    console.log('sinistra');
     imageBackward(carouselImagesElement, images);
-    
 });
 
 
@@ -78,7 +70,6 @@ document.querySelector('#invert_direction').addEventListener('click', () => {
         clearInterval(carouselId)
         carouselId = setInterval(imageBackward, 3000, carouselImagesElement, images);
     }
-    console.log(invertDirection);
 });
 
 /**
@@ -140,7 +131,7 @@ function imageWrite (DOMElement, imageList) {
     imageList.forEach((image) => {
     
         if (image.active) {
-            DOMElement.innerHTML = `<img class='img-fluid d-block m-auto' src='./assets/img/${image.path}'>`;
+            DOMElement.innerHTML = `<img class='img-fluid d-block m-auto' src='${image.path}'>`;
         }
     });
 }
