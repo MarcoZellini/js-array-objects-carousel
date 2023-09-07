@@ -1,9 +1,5 @@
 /* 
 Consegna:
-    Riprendiamo il live coding visto in classe un pó di tempo fá sul carosello di immagini e rifacciamolo, questa volta usando gli oggetti.
-
-    Modifichiamo il codice dell'esercizio per renderlo funzionante con un array di oggetti al posto di un array di stringhe.
-
     Bonus 0:
     Non eramamo ancora a conoscenda di molti strumenti utili, come ad esempio le funzioni. É possibile fare refactoring del codice, pulendolo e creando quanche funzione che possa rendere tutto piú leggibile e pulito?
 
@@ -15,6 +11,7 @@ Consegna:
     E se volessi un bottone per invertire la "direzione" del carosello?
 */
 
+//Array di oggetti immagini
 const images = [
     {
         path: '01.webp',
@@ -37,46 +34,59 @@ const images = [
         active: false
     }
 
-]
-
-console.log(images);
+];
 
 //Definisco gli elementi di cui ho bisogno
 const carouselImagesElement = document.querySelector('#carousel .images');
 const rightArrow = document.querySelector('i.fa-chevron-circle-right');
 const leftArrow = document.querySelector('i.fa-chevron-circle-left');
+let invertDirection = false;
 
-
-
-
+//Mostro per la prima volta l'immagine attiva a video
 imageWrite(carouselImagesElement, images);
+
+//Muovo in avanti le immagini ogni 3 secondi
+let carouselId = setInterval(imageForward, 3000, carouselImagesElement, images);
+
+
 
 
 //Mando avanti di un'immagine il carosello quando clicco sulla freccia destra
 rightArrow.addEventListener('click', function () {
     console.log('destra');
-    imageForward(images);
-    imageWrite(carouselImagesElement, images);
-    //console.log(images);
+    imageForward(carouselImagesElement, images);
+    // imageWrite(, images);
 });
 
 
 //Mando indietro di un'immagine il carosello quando clicco sulla freccia sinistra
 leftArrow.addEventListener('click', function () {
     console.log('sinistra');
-    imageBackword(images);
-    imageWrite(carouselImagesElement, images);
-    //console.log(images);
+    imageBackward(carouselImagesElement, images);
+    
 });
 
 
+//Quanto premo il button con id 'invert_direction' faccio muovere le immagini al contrario
+document.querySelector('#invert_direction').addEventListener('click', () => {
+    if (invertDirection) {
+        invertDirection = false;
+        clearInterval(carouselId)
+        carouselId = setInterval(imageForward, 3000, carouselImagesElement, images);
+    } else {
+        invertDirection = true;
+        clearInterval(carouselId)
+        carouselId = setInterval(imageBackward, 3000, carouselImagesElement, images);
+    }
+    console.log(invertDirection);
+});
 
 /**
  * ### imageForward
  * This function set the active value to the next image
  * @param {Object[]} imageList 
  */
-function imageForward (imageList) {
+function imageForward (DOMElement, imageList) {
 
     let position = 0
     images.forEach((image, i) => {
@@ -92,14 +102,15 @@ function imageForward (imageList) {
     }
 
     imageList[++position].active = true;
+    imageWrite(DOMElement, images);
 }
 
 /**
- * ### imageBackword
+ * ### imageBackward
  * This function set the active value to the previous image
  * @param {Object[]} imageList 
  */
-function imageBackword (imageList) {
+function imageBackward (DOMElement, imageList) {
 
     let position = 0
     images.forEach((image, i) => {
@@ -114,6 +125,7 @@ function imageBackword (imageList) {
         position = imageList.length;
     }
     imageList[--position].active = true;
+    imageWrite(DOMElement, images);
 }
 
 
@@ -128,8 +140,7 @@ function imageWrite (DOMElement, imageList) {
     imageList.forEach((image) => {
     
         if (image.active) {
-            DOMElement.innerHTML = `<img class='img-fluid' src='./assets/img/${image.path}'>`;
+            DOMElement.innerHTML = `<img class='img-fluid d-block m-auto' src='./assets/img/${image.path}'>`;
         }
-    
     });
 }
