@@ -14,25 +14,26 @@ Consegna:
 //Array di oggetti immagini
 const images = [
     {
-        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
+        path: `01.webp`,
         active: true
     },
     {
-        path: `https://picsum.photos/1000/600?random=${Math.ceil(Math.random() * 100)}`,
+        path: `02.webp`,
         active: false
     },
     {
-        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
+        path: `03.webp`,
         active: false
     },
     {
-        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
+        path: `04.webp`,
         active: false
     },
     {
-        path: `https://picsum.photos/1000/1000?random=${Math.ceil(Math.random() * 100)}`,
+        path: `05.webp`,
         active: false
     }
+
 ];
 
 //Definisco gli elementi di cui ho bisogno
@@ -131,7 +132,7 @@ function imageWrite (DOMElement, imageList) {
     imageList.forEach((image) => {
     
         if (image.active) {
-            DOMElement.innerHTML = `<img class='img-fluid d-block m-auto' src='${image.path}'>`;
+            DOMElement.innerHTML = `<img class='img-fluid d-block m-auto' src='./assets/img/${image.path}'>`;
         }
     });
 }
